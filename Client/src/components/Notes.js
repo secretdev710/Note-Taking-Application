@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import AddNote from './AddNote';
 import NoteItem from './NoteItem';
 import noteContext from '../context/notes/noteContext';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Notes = () => {
   const context = useContext(noteContext);
-  const { notes, getNotes, editNote } = context;
+  const { notes, getNotes } = context;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,17 +36,15 @@ const Notes = () => {
     setNote({ ...note, [e.target.name]: e.target.value });
   };
 
-  const handleclick = (e) => {
-    editNote(note.id, note.etitle, note.edescription, note.edueDate);
-    // Close the modal
-    ref.current.classList.add('hidden');
-  };
-
   return (
     <>
-      <AddNote />
-      <h2 className='text-2xl mt-8 font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-blue-500 to-yellow-500'>Your Notes</h2>
-      <div className="grid xl:grid-cols-4 md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-x-20">
+      <div className='flex justify'>
+        <h2 className='flex-shrink-0 text-2xl m-2 font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-blue-500 to-yellow-500'>Your Notes</h2>
+        <Link className=" max-w-sm bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-500 hover:from-indigo-600 hover:via-pink-600 hover:to-red-600 focus:outline-none text-white text-md uppercase font-bold shadow-md rounded-lg ml-auto px-4 py-2" to="/addnote">
+          Add note
+        </Link>
+      </div>
+      <div className="grid grid-cols-1 gap-x-20">
         {Array.isArray(notes) && notes.length > 0 ? (
           notes.map((note) => (
             <NoteItem key={note.id} updateNote={updateNote} note={note} />
@@ -88,7 +86,7 @@ const Notes = () => {
                     Description
                   </label>
                   <textarea
-                   className="mt-1 p-2 w-full text-black border rounded-md"
+                    className="mt-1 p-2 w-full text-black border rounded-md"
                     value={note.edescription}
                     id="edescription"
                     name="edescription"
@@ -115,7 +113,7 @@ const Notes = () => {
               <button
                 type="button"
                 className="mx-4 max-w-sm bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-500 hover:from-indigo-600 hover:via-pink-600 hover:to-red-600 focus:outline-none text-white text-md uppercase font-bold shadow-md rounded-lg px-4 py-2"
-                onClick={handleclick}
+                to="/addNote"
               >
                 Update note
               </button>

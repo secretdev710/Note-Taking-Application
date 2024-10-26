@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
 import noteContext from '../context/notes/noteContext';
+import { useNavigate } from 'react-router-dom';
 
 const AddNote = () => {
   const context = useContext(noteContext);
+  const navigate = useNavigate();
   const { addNote } = context;
 
   const [note, setNote] = useState({ title: '', description: '', dueDate: '' });
-  
 
   const handleclick = (e) => {
     e.preventDefault();
@@ -16,6 +17,7 @@ const AddNote = () => {
       description: '',
       dueDate: '',
     });
+    navigate('/'); 
   };
 
   const onChange = (e) => {
@@ -23,7 +25,7 @@ const AddNote = () => {
   };
 
   return (
-    <div className="my-1 lg:my-3">
+    <div className="my-1 m-auto sm:m-[5%]">
      <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-300 via-blue-500 to-yellow-500">Add a Note</h1>
       <div className="my-4">
         <label htmlFor="title" className="block text-lg font-medium text-gray-200">
