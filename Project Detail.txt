@@ -1,0 +1,75 @@
+Task Overview: Simple Note-Taking Application
+Create a "Note-Taking Application" that allows users to create, edit, delete, and organize notes with basic authentication.
+
+Front-End (React.js):
+Create a React.js application with the following pages:
+
+Login/Register Page: Allow users to sign up or log in.
+Notes List Page: Display a list of the user's notes with options to edit or delete.
+Add/Edit Note Page: A form for adding a new note or editing an existing one.
+User Profile Page (Optional): Show user information with the option to edit details.
+Use React Router for navigation and React Hooks for handling state. Consider using Context API for managing global authentication state.
+
+Implement form validation for fields like title and content in the add/edit note form.
+
+Use a UI library like Material-UI or Tailwind CSS to make the app look clean and responsive.
+
+Back-End (Node.js or Laravel):
+Create a RESTful API using Node.js (Express.js) or Laravel:
+
+User Authentication: Implement JWT-based authentication.
+CRUD Operations:
+Notes: Create, read, update, and delete.
+Database requirements:
+
+Use MongoDB (for Node.js) or MySQL (for Laravel).
+
+User schema/table:
+
+id
+username
+email
+password (hashed)
+created_at, updated_at
+Note schema/table:
+id
+user_id (reference to User)
+title
+content
+created_at, updated_at
+Use middleware to ensure that only authenticated users can access the note-related routes.
+
+Features:
+User Authentication:
+
+Users can register, log in, and stay logged in with JWT tokens.
+Note Management:
+
+Users can create, edit, delete, and view notes.
+Each note should have a title and content.
+Search Notes:
+
+Provide a search bar on the notes list page to search notes by title.
+Additional Functionalities:
+Categories (Optional):
+
+Allow users to categorize notes (e.g., Work, Personal, Ideas).
+Implement a simple filter to view notes by category.
+Markdown Support (Optional):
+
+Support basic Markdown formatting for note content.
+User Profile Management:
+
+Allow users to update their profile information.
+Bonus Tasks (Optional):
+Note Archiving: Add the ability to archive notes instead of deleting them.
+Tagging: Allow users to add tags to notes and filter by tags.
+Testing: Implement basic API endpoint tests using a testing library.
+Dark Mode: Add a toggle for light and dark themes.
+Submission Requirements:
+A GitHub repository link to the project.
+A README.md file with setup instructions.
+Database configuration instructions (MongoDB or MySQL).
+Documentation for the API endpoints.
+This task is straightforward and focuses on essential features like user authentication, CRUD operations, search functionality, and form handling.**
+Use the stack as you want.
