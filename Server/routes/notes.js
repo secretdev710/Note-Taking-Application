@@ -58,6 +58,8 @@ router.put('/updatenote/:id', fetchUser, async (req, res) => {
     if (description) updates.description = description;
     if (dueDate) updates.dueDate = dueDate;
 
+    updates.updated_at = Date.now();
+
     const note = await Notes.findById(req.params.id);
 
     // Check if the note is present or not

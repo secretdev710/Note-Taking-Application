@@ -17,7 +17,7 @@ const AddNote = () => {
       description: '',
       dueDate: '',
     });
-    navigate('/'); 
+    navigate('/');
   };
 
   const onChange = (e) => {
@@ -25,8 +25,8 @@ const AddNote = () => {
   };
 
   return (
-    <div className="my-1 m-auto m-[5%]">
-     <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-300 via-blue-500 to-yellow-500">Add a Note</h1>
+    <div className="my-1 m-auto m-[5%] lg:mx-20 mx-8">
+      <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-300 via-blue-500 to-yellow-500">Add a Note</h1>
       <div className="my-4">
         <label htmlFor="title" className="block text-lg font-medium text-gray-200">
           Title

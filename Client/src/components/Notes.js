@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const Notes = () => {
   const context = useContext(noteContext);
-  const { notes, getNotes } = context;
+  const { notes, getNotes, editNote } = context;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +20,7 @@ const Notes = () => {
 
   const ref = useRef(null);
   const [note, setNote] = useState({ id: '', etitle: '', edescription: '', edueDate: '' });
+  const [search, setSearch] = useState('');
 
   const updateNote = (currentNote) => {
     setNote({
@@ -28,12 +29,24 @@ const Notes = () => {
       edescription: currentNote.description,
       edueDate: currentNote.dueDate,
     });
+
+    console.log(currentNote);
     // Open the modal
     ref.current.classList.remove('hidden');
   };
 
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
+  };
+
+  const onSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const saveChanges = async (e) => {
+    e.preventDefault();
+    editNote(note.id, note.etitle, note.edescription, note.edueDate);
+    ref.current.classList.add('hidden');
   };
 
   return (
@@ -44,9 +57,16 @@ const Notes = () => {
           Add note
         </Link>
       </div>
+      <input
+        type='input'
+        className='text-gray-900 mt-3 h-10 w-full px-3 py-2 border border-gray-300 placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-md'
+        name='search'
+        placeholder='Search goes here...'
+        onChange={onSearch}
+      />
       <div className="grid grid-cols-1 gap-x-20">
         {Array.isArray(notes) && notes.length > 0 ? (
-          notes.map((note) => (
+          notes.filter((note) => note.title.toLowerCase().includes(search.toLowerCase())).map((note) => (
             <NoteItem key={note.id} updateNote={updateNote} note={note} />
           ))
         ) : (
@@ -113,7 +133,7 @@ const Notes = () => {
               <button
                 type="button"
                 className="mx-4 max-w-sm bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-500 hover:from-indigo-600 hover:via-pink-600 hover:to-red-600 focus:outline-none text-white text-md uppercase font-bold shadow-md rounded-lg px-4 py-2"
-                to="/addNote"
+                onClick={saveChanges}
               >
                 Update note
               </button>

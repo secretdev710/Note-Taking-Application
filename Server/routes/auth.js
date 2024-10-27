@@ -130,11 +130,13 @@ router.post("/updateuser", fetchUser, async (req, res) => {
     const newuser = {};
     if (name) newuser.name = name;
     if (email) newuser.email = email;
-    console.log(name, email);
+    newuser.updated_at = Date.now();
+
     let user = await User.findById(req.user.id);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
+    
     user = await User.findByIdAndUpdate(req.user.id, { $set: newuser }, { new: true });
     res.send(user);
   } catch (error) {

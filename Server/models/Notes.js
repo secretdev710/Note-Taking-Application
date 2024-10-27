@@ -18,7 +18,11 @@ const NotesSchema = new Schema({
     type: String,
     default: null 
   },
-  date: {
+  created_at: {
+    type: Date,
+    default: Date.now
+  },
+  updated_at: {
     type: Date,
     default: Date.now
   }
