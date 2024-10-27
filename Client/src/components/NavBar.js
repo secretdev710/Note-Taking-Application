@@ -23,7 +23,10 @@ const NavBar = () => {
   return (
     <nav className="bg-[#28231D] p-4">
       <div className="container mx-auto flex items-center justify-between">
-        <Link to="/" className="gradient-text text-3xl font-bold">NOTEBOX</Link>
+        <Link to="/" className="gradient-text text-3xl font-bold flex align-center">
+          <img src='/logo.png' alt='logo' className='w-12 h-12 mr-2' />
+          NOTEBOX
+        </Link>
         <div className="lg:hidden">
           <button
             onClick={toggleMobileMenu}
@@ -66,6 +69,7 @@ const NavBar = () => {
           <ul className="lg:flex items-center gap-4 justify-center text-md">
             <NavItem className="text-[#EDB7ED]" to="/" label="Home" currentPath={location.pathname} onClick={closeMobileMenu} />
             <NavItem className="text-[#82A0D8]" to="/about" label="About" currentPath={location.pathname} onClick={closeMobileMenu} />
+            <NavItem className="text-[#82A0D8]" to="/profile" label="Profile" currentPath={location.pathname} onClick={closeMobileMenu} />
           </ul>
           <div className="flex items-center">
             {token ? (

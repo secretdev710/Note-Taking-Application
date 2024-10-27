@@ -113,3 +113,32 @@ try {
 });
 module.exports = router;
 
+router.post("/getuserinfo", fetchUser, async (req, res) => {
+  try {
+    const userid = req.user.id;
+    const user = await User.findById(req.user.id).select("name email");
+    res.send(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.post("/updateuser", fetchUser, async (req, res) => {
+  try {
+    const { name, email } = req.body;
+    const newuser = {};
+    if (name) newuser.name = name;
+    if (email) newuser.email = email;
+    console.log(name, email);
+    let user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    user = await User.findByIdAndUpdate(req.user.id, { $set: newuser }, { new: true });
+    res.send(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});

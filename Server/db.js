@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
 
-const mongoURI = "mongodb+srv://ishitaraina18:oczhfXUnFDS4OB5m@cluster0.ow1fwyb.mongodb.net/";
-
 const connectToMongo = async () => {
   try {
-    await mongoose.connect(mongoURI, {
+    await mongoose.connect("mongodb://localhost:27017/notebox", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
