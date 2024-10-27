@@ -2,7 +2,7 @@ import React from 'react';
 
 const About = () => {
   return (
-    <div className="mx-28">
+    <div className="sm:mx-28 m-[12%]">
       <h2 className="text-2xl font-bold my-2 bg-clip-text text-transparent bg-gradient-to-r from-pink-300 via-blue-500 to-yellow-500">About NoteBox</h2>
       <p className="mb-4 text-lg">
         Welcome to NoteBox, your go-to platform for easy note-taking!

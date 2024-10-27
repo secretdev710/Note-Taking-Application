@@ -15,7 +15,7 @@ const NotesSchema = new Schema({
     required: true
   },
   dueDate: {
-    type: String,
+    type: Date,
     default: null 
   },
   created_at: {

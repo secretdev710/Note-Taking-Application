@@ -7,15 +7,19 @@ const AddNote = () => {
   const navigate = useNavigate();
   const { addNote } = context;
 
-  const [note, setNote] = useState({ title: '', description: '', dueDate: '' });
+  const [note, setNote] = useState({ title: '', description: '', dueDate: null });
 
   const handleclick = (e) => {
     e.preventDefault();
+    if(!note.title || !note.description || !note.dueDate) {
+      alert('Please fill all the fields');
+      return;
+    }
     addNote(note.title, note.description, note.dueDate);
     setNote({
       title: '',
       description: '',
-      dueDate: '',
+      dueDate: null,
     });
     navigate('/');
   };
@@ -59,15 +63,15 @@ const AddNote = () => {
         <label htmlFor="dueDate" className="block text-lg font-medium text-gray-200">
           Due Date
         </label>
-        <textarea
+        <input
           className="mt-1 p-2 text-black w-full border rounded-md"
           value={note.dueDate}
+          type='datetime-local'
           id="dueDate"
           name="dueDate"
           placeholder="Task due date.."
-          rows="1"
           onChange={onChange}
-        ></textarea>
+        ></input>
       </div>
       <button type="button" className=" max-w-sm bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-500 hover:from-indigo-600 hover:via-pink-600 hover:to-red-600 focus:outline-none text-white text-md uppercase font-bold shadow-md rounded-lg mx-auto px-4 py-2" onClick={handleclick}>
         Add note

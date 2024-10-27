@@ -15,7 +15,12 @@ const Profile = (props) => {
       }
       else {
         const user = data;
-        setUserInfo(user);
+        console.log(typeof user.created_at);
+        setUserInfo({
+          ...user,
+          created_at: new Date(user.created_at).toLocaleDateString(),
+          updated_at: new Date(user.updated_at).toLocaleDateString()
+        });
       }
     }
     getUserInfo();
@@ -38,7 +43,7 @@ const Profile = (props) => {
 
   return (
     <div>
-      <div className="my-1 m-auto m-[5%] lg:mx-20 mx-8">
+      <div className="sm:mx-auto sm:my-12 sm:max-w-md m-[12%]">
         <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-300 via-blue-500 to-yellow-500">Edit your profile</h1>
         <div className="my-4">
           <label htmlFor="title" className="block text-lg font-medium text-gray-200">
@@ -67,6 +72,10 @@ const Profile = (props) => {
             rows="1"
             onChange={onChange}
           ></textarea>
+        </div>
+        <div className="my-3 flex justify-between">
+          <p className="text-sm text-gray-400">Created on: {userInfo.created_at}</p>
+          <p className="text-sm text-gray-400">Last updated on: {userInfo.updated_at}</p>
         </div>
         <button type="button" className=" max-w-sm bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-500 hover:from-indigo-600 hover:via-pink-600 hover:to-red-600 focus:outline-none text-white text-md uppercase font-bold shadow-md rounded-lg mx-auto px-4 py-2" onClick={handleclick}>
           Save

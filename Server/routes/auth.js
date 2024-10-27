@@ -116,7 +116,7 @@ module.exports = router;
 router.post("/getuserinfo", fetchUser, async (req, res) => {
   try {
     const userid = req.user.id;
-    const user = await User.findById(req.user.id).select("name email");
+    const user = await User.findById(req.user.id).select("name email created_at updated_at");
     res.send(user);
   } catch (error) {
     console.error(error.message);

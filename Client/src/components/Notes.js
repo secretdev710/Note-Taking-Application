@@ -19,7 +19,7 @@ const Notes = () => {
   }, []);
 
   const ref = useRef(null);
-  const [note, setNote] = useState({ id: '', etitle: '', edescription: '', edueDate: '' });
+  const [note, setNote] = useState({ id: '', etitle: '', edescription: '', edueDate: null });
   const [search, setSearch] = useState('');
 
   const updateNote = (currentNote) => {
@@ -29,8 +29,6 @@ const Notes = () => {
       edescription: currentNote.description,
       edueDate: currentNote.dueDate,
     });
-
-    console.log(currentNote);
     // Open the modal
     ref.current.classList.remove('hidden');
   };
@@ -47,6 +45,17 @@ const Notes = () => {
     e.preventDefault();
     editNote(note.id, note.etitle, note.edescription, note.edueDate);
     ref.current.classList.add('hidden');
+  };
+
+  const formatDateTime = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
 
   return (
@@ -118,14 +127,14 @@ const Notes = () => {
                   <label htmlFor="edueDate" className="block text-lg font-medium text-[#EDB7ED]">
                     Due Date
                   </label>
-                  <textarea
+                  <input
+                    type='datetime-local'
                     className="mt-1 p-2 text-black w-full border rounded-md"
-                    value={note.edueDate}
+                    defaultValue={formatDateTime(note.edueDate)}
                     id="edueDate"
                     name="edueDate"
-                    rows="1"
                     onChange={onChange}
-                  ></textarea>
+                  ></input>
                 </div>
               </div>
             </div>
