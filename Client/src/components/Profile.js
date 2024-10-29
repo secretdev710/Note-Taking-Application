@@ -77,7 +77,7 @@ const Profile = (props) => {
           <p className="text-sm text-gray-400">Created on: {userInfo.created_at}</p>
           <p className="text-sm text-gray-400">Last updated on: {userInfo.updated_at}</p>
         </div>
-        <button type="button" className=" max-w-sm bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-500 hover:from-indigo-600 hover:via-pink-600 hover:to-red-600 focus:outline-none text-white text-md uppercase font-bold shadow-md rounded-lg mx-auto px-4 py-2" onClick={handleclick}>
+        <button type="button" className=" w-full bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-500 hover:from-indigo-600 hover:via-pink-600 hover:to-red-600 focus:outline-none text-white text-md uppercase font-bold shadow-md rounded-lg mx-auto px-4 py-2" onClick={handleclick}>
           Save
         </button>
       </div>

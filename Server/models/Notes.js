@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const NotesSchema = new Schema({
-    user: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user'
-    },
+  },
   title: {
     type: String,
     required: true
@@ -16,7 +16,11 @@ const NotesSchema = new Schema({
   },
   dueDate: {
     type: Date,
-    default: null 
+    default: null
+  },
+  completed: {
+    type: Boolean,
+    default: false
   },
   created_at: {
     type: Date,
@@ -28,4 +32,4 @@ const NotesSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Notes', NotesSchema);
+export default mongoose.model('Notes', NotesSchema);

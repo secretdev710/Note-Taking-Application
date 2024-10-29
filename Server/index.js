@@ -1,7 +1,12 @@
-const express = require("express");
+import express from "express";
+import cors from "cors";
+
+import connectDB from "./db.js";
+
+import AuthRouter from "./routes/Auth.js";
+import NotesRouter from "./routes/Notes.js";
 const app = express();
 const port = 5000;
-const cors = require('cors');
 
 app.use(cors(
   {
@@ -15,10 +20,10 @@ app.use(cors(
 app.use(express.json());
 
 // Connect to MongoDB
-require("./db")(); // Assuming db.js exports a function for connecting to MongoDB
+connectDB(); // Assuming db.js exports a function for connecting to MongoDB
 
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/notes", require("./routes/notes"));
+app.use("/api/auth", AuthRouter);
+app.use("/api/notes", NotesRouter);
 
 // Start the server
 const server = app.listen(port, () => {

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const Notes = () => {
   const context = useContext(noteContext);
-  const { notes, getNotes, editNote } = context;
+  const { notes, getNotes, editNote, completeNote } = context;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,19 +21,34 @@ const Notes = () => {
   const ref = useRef(null);
   const [note, setNote] = useState({ id: '', etitle: '', edescription: '', edueDate: null });
   const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('all');
 
+  function formatDate(date) {
+    // Extract components and ensure two-digit formatting for month, day, hour, and minute
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    // Combine components into the desired format
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
   const updateNote = (currentNote) => {
+    console.log(currentNote.dueDate);
+    const tmpDate = formatDate(new Date(currentNote.dueDate));
     setNote({
       id: currentNote._id,
       etitle: currentNote.title,
       edescription: currentNote.description,
-      edueDate: currentNote.dueDate,
+      edueDate: tmpDate,
     });
     // Open the modal
     ref.current.classList.remove('hidden');
   };
 
   const onChange = (e) => {
+    console.log(e.target.value);
     setNote({ ...note, [e.target.name]: e.target.value });
   };
 
@@ -41,21 +56,32 @@ const Notes = () => {
     setSearch(e.target.value);
   };
 
-  const saveChanges = async (e) => {
-    e.preventDefault();
-    editNote(note.id, note.etitle, note.edescription, note.edueDate);
-    ref.current.classList.add('hidden');
+  const checkDueValidation = (dateString) => {
+    const date = new Date(dateString);
+    const minDate = new Date();
+    const maxDate = new Date("2050-12-31T23:59");
+    if (date > minDate && date < maxDate) {
+      return true;
+    }
+    return false;
+  }
+
+  const onFilter = (e) => {
+    setFilter(e.target.value);
   };
 
-  const formatDateTime = (dateString) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  const saveChanges = async (e) => {
+    e.preventDefault();
+    if (!note.etitle || !note.edescription || !note.edueDate) {
+      alert('Please fill all the fields');
+      return;
+    }
+    if (!checkDueValidation(note.edueDate)) {
+      alert('Please enter a valid date');
+      return;
+    }
+    editNote(note.id, note.etitle, note.edescription, note.edueDate);
+    ref.current.classList.add('hidden');
   };
 
   return (
@@ -66,17 +92,28 @@ const Notes = () => {
           Add note
         </Link>
       </div>
-      <input
-        type='input'
-        className='text-gray-900 mt-3 h-10 w-full px-3 py-2 border border-gray-300 placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-md'
-        name='search'
-        placeholder='Search goes here...'
-        onChange={onSearch}
-      />
+      <div className="flex justify-between flex-wrap sm:flex-nowrap">
+        <input
+          type='input'
+          className='text-gray-900 mt-3 h-10 w-full px-3 py-2 border border-gray-300 placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-md'
+          name='search'
+          placeholder='Search goes here...'
+          onChange={onSearch}
+        />
+        <select
+          className='sm:ml-3 text-gray-900 mt-3 h-10 w-full sm:w-[30%] px-3 py-2 border border-gray-300 placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-md'
+          name='filter'
+          onChange={onFilter}
+        >
+          <option value='all'>All</option>
+          <option value='completed'>Completed</option>
+          <option value='uncompleted'>Uncompleted</option>
+        </select>
+      </div>
       <div className="grid grid-cols-1 gap-x-20">
         {Array.isArray(notes) && notes.length > 0 ? (
-          notes.filter((note) => note.title.toLowerCase().includes(search.toLowerCase())).map((note) => (
-            <NoteItem key={note.id} updateNote={updateNote} note={note} />
+          notes.filter((note) => { return filter === 'all' ? true : filter === 'completed' ? note.completed : !note.completed }).filter((note) => note.title.toLowerCase().includes(search.toLowerCase())).map((note) => (
+            <NoteItem key={note.id} updateNote={updateNote} note={note} completeNote={completeNote} />
           ))
         ) : (
           <p className="mx-1">No notes found</p>
@@ -130,9 +167,11 @@ const Notes = () => {
                   <input
                     type='datetime-local'
                     className="mt-1 p-2 text-black w-full border rounded-md"
-                    defaultValue={formatDateTime(note.edueDate)}
+                    value={note.edueDate}
                     id="edueDate"
                     name="edueDate"
+                    min="2023-01-01T00:00"
+                    max="2050-12-31T23:59"
                     onChange={onChange}
                   ></input>
                 </div>

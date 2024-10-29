@@ -13,6 +13,10 @@ The NOTEBOX is a full-stack CRUD Todo app developed using the MERN stack (MongoD
   - Edit notes to update information.
   - Delete unwanted notes to keep the list clean.
 
+  - **User Authentication: Implement JWT-based authentication.**
+- **CRUD Operations:**
+  - Notes: Create, read, update, and delete.
+
 - **Tailwind CSS Styling:**
   - The application is styled using Tailwind CSS, providing a clean and modern user interface.
 

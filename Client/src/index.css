@@ -2,10 +2,16 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-i{
+i {
     cursor: pointer;
 }
-body{
+
+body {
     background-color: rgb(39, 39, 39);
     color: white;
+}
+
+.complete-before::before {
+    content: "Centered";
+    @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
 }

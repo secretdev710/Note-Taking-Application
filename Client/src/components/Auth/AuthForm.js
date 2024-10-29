@@ -26,7 +26,7 @@ const AuthForm = ({ formType, onSubmit }) => {
   return (
     <div className="mx-auto my-12 max-w-md">
       <form onSubmit={handleSubmit} className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h1 className="text-3xl text-center gradient-text font-semibold mb-4">{formType === 'login' ? 'Login' : 'Sign up'} to Notebox</h1>
+        <h1 className="text-3xl text-center gradient-text font-semibold mb-4">{formType === 'login' ? 'Login' : 'Sign up'} to TODO</h1>
 
         {formType === 'signup' && (
           <div className="mb-4">
@@ -97,7 +97,7 @@ const AuthForm = ({ formType, onSubmit }) => {
           {formType === 'login' ? 'Login' : 'Sign up'}
         </button>
         <div className='flex gap-2 mt-2'>
-          <p className='text-gray-400'>{formType === 'login' ? "Don't have an accoun1?" : 'Already Have an account? '}</p>
+          <p className='text-gray-400'>{formType === 'login' ? "Don't have an account?" : 'Already Have an account? '}</p>
           <Link to={formType === 'login' ? '/signup' : '/login'} className='text-gray-200 hover:cursor-pointer'>
             {formType === 'login' ? 'Sign up' : 'Login'}
           </Link>

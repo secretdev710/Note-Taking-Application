@@ -25,7 +25,7 @@ const NavBar = () => {
       <div className="container mx-auto flex items-center justify-between">
         <Link to="/" className="gradient-text text-3xl font-bold flex align-center">
           <img src='/logo.png' alt='logo' className='w-12 h-12 mr-2' />
-          NOTEBOX
+          TODO-APP
         </Link>
         <div className="lg:hidden">
           <button

@@ -1,10 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import noteContext from '../context/notes/noteContext';
+import CompleteConfirm from './CompleteConfirm';
 
 const NoteItem = (props) => {
   const context = useContext(noteContext);
-  const { deleteNote } = context;
+  const { deleteNote, completeNote } = context;
   const { note, updateNote } = props;
+  const [showModal, setShowModal] = useState(false);
+
+  const onComplete = () => {
+    setShowModal(true);
+  }
 
   return (
     // Remove the unnecessary div element
@@ -28,8 +34,25 @@ const NoteItem = (props) => {
             className="fas fa-edit text-gray-800 cursor-pointer"
             onClick={() => updateNote(note)}
           ></i>
+          <i
+            title={note.completed ? "Completed" : "Uncompleted"}
+            className={`fas fa-check text-gray-800 cursor-pointer ml-4 rounded-full w-5 h-5 complete-before relative ${note.completed ? 'bg-gray-700 text-white' : ''}`}
+            onClick={onComplete}
+          ></i>
         </div>
       </div>
+      {
+        showModal && (
+          <CompleteConfirm
+            closeModal={() => setShowModal(false)}
+            confirmCompletion={() => {
+              completeNote(note._id);
+              setShowModal(false);
+              props.completeNote(note._id);
+            }}
+          />
+        )
+      }
     </div>
 
   );

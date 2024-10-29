@@ -9,10 +9,24 @@ const AddNote = () => {
 
   const [note, setNote] = useState({ title: '', description: '', dueDate: null });
 
+  const checkDueValidation = (dateString) => {
+    const date = new Date(dateString);
+    const minDate = new Date();
+    const maxDate = new Date("2050-12-31T23:59");
+    if (date > minDate && date < maxDate) {
+      return true;
+    }
+    return false;
+  }
+
   const handleclick = (e) => {
     e.preventDefault();
-    if(!note.title || !note.description || !note.dueDate) {
+    if (!note.title || !note.description || !note.dueDate) {
       alert('Please fill all the fields');
+      return;
+    }
+    if(!checkDueValidation(note.dueDate)) {
+      alert('Please enter a valid date');
       return;
     }
     addNote(note.title, note.description, note.dueDate);
@@ -71,6 +85,8 @@ const AddNote = () => {
           name="dueDate"
           placeholder="Task due date.."
           onChange={onChange}
+          min="2023-01-01T00:00"
+          max="2050-12-31T23:59"
         ></input>
       </div>
       <button type="button" className=" max-w-sm bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-500 hover:from-indigo-600 hover:via-pink-600 hover:to-red-600 focus:outline-none text-white text-md uppercase font-bold shadow-md rounded-lg mx-auto px-4 py-2" onClick={handleclick}>

@@ -87,9 +87,29 @@ const NoteState = (props) => {
     }
   };
 
+  const completeNote = async (id) => {
+    try {
+      const response = await fetch(`${host}/api/notes/completenote/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      });
+      if (response.ok) {
+        const updatedNotes = notes.map((note) =>
+          note._id === id ? { ...note, completed: !note.completed } : note
+        );
+        setNotes(updatedNotes);
+      }
+    } catch (error) {
+      console.error("Error completing note:", error);
+    }
+  };
+
   return (
     <NoteContext.Provider
-      value={{ notes, getNotes, addNote, deleteNote, editNote }}
+      value={{ notes, getNotes, addNote, deleteNote, editNote, completeNote }}
     >
       {props.children}
     </NoteContext.Provider>
