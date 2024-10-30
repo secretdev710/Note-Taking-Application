@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 // ROUTE 1: ceate a user using: POST "/api/auth/createuser". Doesn't require auth
 export const createUser = async (req, res) => {
     let success = false;
-    console.log("Registeration request received");
     //error: throws error -> bad request 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -18,8 +17,9 @@ export const createUser = async (req, res) => {
             return res.status(400).json({ success, error: "Sorry a user with this email already exists" });
         }
         //hashing the password
+        console.log("Registeration request received");
         const salt = await bcrypt.genSalt(10);
-        secPass = await bcrypt.hash(req.body.password, salt);
+        const secPass = await bcrypt.hash(req.body.password, salt);
         //Create a new user
         user = await User.create({
             name: req.body.name,
